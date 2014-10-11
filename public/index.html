@@ -18,7 +18,13 @@
                 <input id="btnImages" type="submit" value="refresh images" onclick="app.reloadImages();">
             </div>
             <div id="imageGrid">
-                <div id="snapshotContainer">
+                <div id="snapshotContainer" title="click to take snapshot">
+                    <div id="actions">
+                        <button class="verticalListButton" id="btnSnap" onclick="app.takePhoto();">take snapshot</button>
+                        <button class="verticalListButton" id="btnDnd">do not disturb</button>
+                        <button class="verticalListButton" id="btnAfk">away from keyboard</button>
+                        <button class="verticalListButton" id="btnAvailable">available</button>
+                    </div>
                     <div class="background"></div>
                     <div id="my_camera"></div>
                     <div id="my_result"></div>

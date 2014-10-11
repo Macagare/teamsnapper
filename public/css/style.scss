@@ -8,13 +8,44 @@ body {
 	color: $primary-color;
 }
 
-header {
+.listActionButton {
+	width: $snapshot-width - 20px;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	-ms-border-radius:3px;
+	border-radius:3px;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	cursor:pointer;
+	display:inline-block;
+	padding:10px 14px;
+	font-weight:400;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	font-size:14px;
+	text-align:center;
+	color:white;
+	background-color:#BDC3C9;
+	font-family:"Source Sans Pro","Lucida Grande",Verdana,Helvetica,sans;
+	outline:none;
 
+	 &:hover {
+	    background-color:#D7DBDF;
+	}
+
+	&:active {
+		background-color:#5E6264;
+	}
+
+	&:disabled {
+		color: #666666;
+		background-color: #999999;
+	}
 }
 
-nav {
-
-}
+header {}
+nav {}
 
 #content {
 	h1 {
@@ -27,9 +58,9 @@ nav {
 			width:$snapshot-width;
 			height:$snapshot-height;
 			background-color: #666666;
-			cursor: pointer;
 
 			.background {
+				z-index: 7;
 				position: absolute;
 				background:url(/img/head.png) no-repeat center center;
 				width:$snapshot-width;
@@ -37,6 +68,7 @@ nav {
 			}
 
 			#my_camera {
+				z-index: 9;
 				visibility: hidden;
 				position: absolute;
 				float: left;
@@ -45,10 +77,37 @@ nav {
 			}
 
 			#my_result {
+				z-index: 8;
 				position: absolute;
 				float: left;
 				width:$snapshot-width;
 				height:$snapshot-height;
+			}
+
+			#actions {
+				display: none;
+				z-index: 11;
+				position: absolute;
+				width:$snapshot-width;
+				height:$snapshot-height;
+				text-align: center;
+				padding-top: 30px;
+
+				#btnSnap {
+					@extend .listActionButton;
+				}
+				#btnDnd {
+					@extend .listActionButton;
+					background-color: #FF3333;
+				}
+				#btnAfk {
+					@extend .listActionButton;
+					background-color: #6666FF;
+				}
+				#btnAvailable {
+					@extend .listActionButton;
+					background-color: #009933;
+				}
 			}
 		}
 
@@ -73,6 +132,4 @@ nav {
 
 }
 
-footer {
-
-}
+footer {}

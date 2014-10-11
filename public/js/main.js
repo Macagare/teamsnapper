@@ -1,16 +1,21 @@
 app = (function(win, doc, undefined) {
-	var timer
-		, webcamEnabled = false
+	var webcamEnabled = false
 		, SNAP_TIMEOUT = 2000
         , userId = 0
+        , refreshTimer = 0
+        , TIMER_DELAY = 10000
+
 		, takeSnapshot = function() {
-			setTimeout(function(){
-				Webcam.snap( setPreview );
-			}, SNAP_TIMEOUT);
+            if ( webcamEnabled ) {
+    			setTimeout(function(){
+    				Webcam.snap( setPreview );
+    			}, SNAP_TIMEOUT);
+            }
     	}
     	, startWebcamStream = function(){
             Webcam.on("live", function() {
                 webcamEnabled = true;
+                $("#btnSnap").prop( "disabled", !webcamEnabled )
             });
             Webcam.on("error", function(error) {
                 alert(error);
@@ -23,6 +28,7 @@ app = (function(win, doc, undefined) {
     	}
     	, stopWebcamStream = function() {
     		webcamEnabled = false;
+            $("#btnSnap").prop( "disabled", !webcamEnabled )
     		Webcam.reset();
     	}
     	, upload = function(data_uri) {
@@ -59,13 +65,38 @@ app = (function(win, doc, undefined) {
         }
         , addListeners = function() {
             $("#snapshotContainer").on("click", takeSnapshot);
+            $("#snapshotContainer").on("mouseover", onMouseOverSnapshotContainer);
+            $("#snapshotContainer").on("mouseout", onMouseOutSnapshotContainer);
+        }
+        , onMouseOverSnapshotContainer = function() {
+            console.log("onMouseOverSnapshotContainer");
+            $("#actions").show();
+        }
+        , onMouseOutSnapshotContainer = function() {
+            console.log("onMouseOutSnapshotContainer");
+            $("#actions").hide();
+        }
+        , startRefreshUserImagesTimer = function() {
+            stopRefreshUserImagesTimer();
+            refreshTimer = setInterval( function() {
+                refreshUserImages(userId);
+                takeSnapshot();
+            }, TIMER_DELAY );
+        }
+        , stopRefreshUserImagesTimer = function() {
+            clearInterval(refreshTimer);
+        }
+        , init = function() {
+            $("#btnSnap").prop( "disabled", !webcamEnabled )
+            userId = getQueryParamByName("id");
+            startWebcamStream();
+            addListeners();
+            refreshUserImages(userId);
+            startRefreshUserImagesTimer();
         };
 
-	$(doc).ready(function(){
-        userId = getQueryParamByName("id");
-        startWebcamStream();
-        addListeners();
-        refreshUserImages(userId);
+    $(doc).ready(function(){
+        init();
 	});
 
 	return {
