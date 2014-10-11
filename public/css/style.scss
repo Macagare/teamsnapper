@@ -1,0 +1,44 @@
+$app-font: Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+	font: 100% $app-font;
+	color: $primary-color;
+}
+
+header {
+
+}
+
+nav {
+
+}
+
+#content {
+	h1 {
+		color: #000000;
+	}
+
+	#snapshotContainer {
+		width:640px;
+		height:240px;
+
+		#my_camera {
+			float: left;
+			width:320px;
+			height:240px;
+		}
+		#my_result {
+			float: left;
+			width:320px;
+			height:240px;
+		}
+	}
+	#btnSnapshot {
+
+	}
+}
+
+footer {
+
+}

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Webcam</title>
+        <link rel="stylesheet" href="/css/style.css" />
+        <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <header></header>
+        <nav></nav>
+        <div id="content">
+            <h1>Welcome to Webcam</h1>
+            <div id="snapshotContainer">
+                <div id="my_camera"></div>
+                <div id="my_result"></div>
+            </div>
+            <input id="btnSnapshot" type="submit" value="snap" onclick="app.takePhoto();">
+        </div>
+        <footer></footer>
+        <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="/js/webcam.min.js"></script>
+        <script type="text/javascript" src="/js/main.min.js"></script>
+    </body>
+</html>
