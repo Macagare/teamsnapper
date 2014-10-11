@@ -12,12 +12,18 @@
         <header></header>
         <nav></nav>
         <div id="content">
-            <h1>Welcome to Webcam</h1>
-            <div id="snapshotContainer">
-                <div id="my_camera"></div>
-                <div id="my_result"></div>
+            <h1>Who is online?</h1>
+            <div id="controls">
+                <input id="btnSnapshot" type="submit" value="snap" onclick="app.takePhoto();">
+                <input id="btnImages" type="submit" value="refresh images" onclick="app.reloadImages();">
             </div>
-            <input id="btnSnapshot" type="submit" value="snap" onclick="app.takePhoto();">
+            <div id="imageGrid">
+                <div id="snapshotContainer">
+                    <div class="background"></div>
+                    <div id="my_camera"></div>
+                    <div id="my_result"></div>
+                </div>
+            </div>
         </div>
         <footer></footer>
         <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>

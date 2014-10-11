@@ -1,5 +1,7 @@
 $app-font: Helvetica, sans-serif;
 $primary-color: #333;
+$snapshot-width: 320px;
+$snapshot-height: 240px;
 
 body {
 	font: 100% $app-font;
@@ -19,24 +21,54 @@ nav {
 		color: #000000;
 	}
 
-	#snapshotContainer {
-		width:640px;
-		height:240px;
+	#imageGrid {
+		#snapshotContainer {
+			float: left;
+			width:$snapshot-width;
+			height:$snapshot-height;
+			background-color: #666666;
 
-		#my_camera {
-			float: left;
-			width:320px;
-			height:240px;
+			.background {
+				position: absolute;
+				background:url(/img/head.png) no-repeat center center;
+				width:$snapshot-width;
+				height:$snapshot-height;
+			}
+
+			#my_camera {
+				position: absolute;
+				float: left;
+				width:$snapshot-width;
+				height:$snapshot-height;
+			}
+			
+			#my_result {
+				position: absolute;
+				float: left;
+				width:$snapshot-width;
+				height:$snapshot-height;
+			}
 		}
-		#my_result {
+
+		.snapshot {
 			float: left;
-			width:320px;
-			height:240px;
+			width:$snapshot-width;
+			height:$snapshot-height;
 		}
 	}
-	#btnSnapshot {
 
+	#controls {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		#btnSnapshot {
+			float: right;
+		}
+		#btnImages {
+			float: right;
+		}
 	}
+
 }
 
 footer {
