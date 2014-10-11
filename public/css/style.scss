@@ -27,6 +27,7 @@ nav {
 			width:$snapshot-width;
 			height:$snapshot-height;
 			background-color: #666666;
+			cursor: pointer;
 
 			.background {
 				position: absolute;
@@ -36,12 +37,13 @@ nav {
 			}
 
 			#my_camera {
+				visibility: hidden;
 				position: absolute;
 				float: left;
 				width:$snapshot-width;
 				height:$snapshot-height;
 			}
-			
+
 			#my_result {
 				position: absolute;
 				float: left;

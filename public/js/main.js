@@ -2,6 +2,7 @@ app = (function(win, doc, undefined) {
 	var timer
 		, webcamEnabled = false
 		, SNAP_TIMEOUT = 2000
+        , userId = 0
 		, takeSnapshot = function() {
 			setTimeout(function(){
 				Webcam.snap( setPreview );
@@ -24,31 +25,47 @@ app = (function(win, doc, undefined) {
     		webcamEnabled = false;
     		Webcam.reset();
     	}
-    	, freezeStream = function() {
-    		Webcam.freeze();
-    	}, upload = function(data_uri) {
-    		Webcam.upload( data_uri, '/upload/123', function(code, text) {
-		        console.log(code, text);
+    	, upload = function(data_uri) {
+    		Webcam.upload( data_uri, '/upload/' + userId, function(code, text) {
+                if ( code != 200 ) {
+                    alert("failed to upload snapshot");
+                }
 		    } );
     	}
-        , refreshUserImages = function() {
+        , refreshUserImages = function(id) {
             $.get( "/images", function( data ) {
                 deleteUserImages();
-                addUserImages(data);
+                addUserImages(data, id);
             }, "json" );
         }
         , deleteUserImages = function() {
             $("#imageGrid .snapshot").remove();
         }
-        , addUserImages = function(filenames) {
+        , getUserImage = function(id) {
+            return id + ".jpg";
+        }
+        , addUserImages = function(filenames, excludeId) {
             for (var i = filenames.length - 1; i >= 0; i--) {
-                $( "#imageGrid" ).append( '<div class="snapshot"><img src="images/' + filenames[i] + '"></div>' );
+                if (filenames[i] != getUserImage(excludeId)) {
+                    $( "#imageGrid" ).append( '<div class="snapshot"><img src="images/' + filenames[i] + '"></div>' );
+                }
             };
+        }
+        , getQueryParamByName = function(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+        , addListeners = function() {
+            $("#snapshotContainer").on("click", takeSnapshot);
         };
 
 	$(doc).ready(function(){
-		startWebcamStream();
-        refreshUserImages();
+        userId = getQueryParamByName("id");
+        startWebcamStream();
+        addListeners();
+        refreshUserImages(userId);
 	});
 
 	return {
@@ -56,7 +73,7 @@ app = (function(win, doc, undefined) {
 			takeSnapshot();
 		},
         reloadImages:function() {
-            refreshUserImages();
+            refreshUserImages(userId);
         }
 	};
 })(window, document);
